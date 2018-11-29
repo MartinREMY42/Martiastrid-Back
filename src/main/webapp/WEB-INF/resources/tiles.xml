@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="template-main" template="/WEB-INF/jsp/template/template.jsp">
+        <put-attribute name="main-content" value="" />
+    </definition>
+
+    <definition name="integrated:**" extends="template-main" >
+        <put-attribute name="main-content" value="/WEB-INF/jsp/{1}.jsp"/>
+    </definition>
+
+    <definition name="template-with-menu" template="/WEB-INF/jsp/template/templateWithMenu.jsp">
+        <put-attribute name="main-content" value="" />
+    </definition>
+
+    <definition name="integratedWithMenu:**" extends="template-with-menu" >
+        <put-attribute name="main-content" value="/WEB-INF/jsp/{1}.jsp"/>
+    </definition>
+
+    <definition name="template-login" template="/WEB-INF/jsp/template/loginTemplate.jsp">
+        <put-attribute name="main-content" value="" />
+    </definition>
+
+    <definition name="loginTemplate:**" extends="template-login" >
+        <put-attribute name="main-content" value="/WEB-INF/jsp/{1}.jsp"/>
+    </definition>
+
+
+</tiles-definitions>

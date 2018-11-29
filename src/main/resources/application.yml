@@ -1,0 +1,11 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /martiastrid
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/martiastrid_pizza?user=postgres&currentSchema=pizza
+    password: 1234
+  jpa:
+    database: postgresql
+    show-sql: true
