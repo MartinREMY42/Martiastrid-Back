@@ -1,6 +1,7 @@
 package eu.busi.martiastrid.restController;
 
 import eu.busi.martiastrid.configuration.TokenProvider;
+import eu.busi.martiastrid.model.AuthToken;
 import eu.busi.martiastrid.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,6 @@ public class AuthenticationController {
 
         final String token = tokenProvider.generateToken(authentication);
 
-        // ResponseEntity.ok(new AuthToken(token));
-        return null;
+        return ResponseEntity.ok(new AuthToken(token));
     }
 }
