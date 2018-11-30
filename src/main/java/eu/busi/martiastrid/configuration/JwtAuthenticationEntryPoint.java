@@ -17,7 +17,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
      private static final long serialVersionUID = -8970718410437077606L;
 
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, org.springframework.security.core.AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest httpServletRequest,
+                         HttpServletResponse httpServletResponse,
+                         org.springframework.security.core.AuthenticationException e)
+             throws IOException, ServletException {
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }

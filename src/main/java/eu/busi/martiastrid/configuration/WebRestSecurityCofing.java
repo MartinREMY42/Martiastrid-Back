@@ -1,6 +1,7 @@
 package eu.busi.martiastrid.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,46 +15,51 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
 
-    @Resource
+    @Autowired
+    @Qualifier("userDetailServiceImplementation")
     private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    @Bean
     @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(encoder());
     }
 
     @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean(){
+    public JwtAuthenticationFilter authenticationTokenFilterBean() {
         return new JwtAuthenticationFilter();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/token","/signup").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
+
+//        http.cors().and()
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/signup",
+//                        "/token/generate-token").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(authenticationTokenFilterBean(),
                 UsernamePasswordAuthenticationFilter.class);
