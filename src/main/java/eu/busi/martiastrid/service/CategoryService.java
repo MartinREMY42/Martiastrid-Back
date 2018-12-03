@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CategoryService {
@@ -15,5 +16,9 @@ public class CategoryService {
     public boolean isExistingCategory(String category) {
         Collection<String> categories = categoryDao.getAll();
         return categories.contains(category);
+    }
+
+    public Collection<String> getAll(){
+        return categoryDao.getAll();
     }
 }
