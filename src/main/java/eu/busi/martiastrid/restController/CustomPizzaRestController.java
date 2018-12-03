@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customPizza")
+@RequestMapping("/api/customPizza")
 public class CustomPizzaRestController {
 
     private PizzaService pizzaService;
