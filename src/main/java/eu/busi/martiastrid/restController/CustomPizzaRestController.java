@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customPizza")
+@RequestMapping("/api/customPizza")
 @CrossOrigin("*")
 public class CustomPizzaRestController {
 

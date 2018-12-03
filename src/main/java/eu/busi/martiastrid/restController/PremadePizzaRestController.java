@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/pizzas")
+@RequestMapping("/api/pizzas")
 @CrossOrigin("*")
 public class PremadePizzaRestController {
 
@@ -29,7 +29,7 @@ public class PremadePizzaRestController {
      * @return liste de toutes mes pizzas
      */
 
-    @GetMapping("/")
+    @GetMapping("")
     public List getAll(){
 
         List<Pizza> pizzas = pizzaService.getAllStandard().stream()
@@ -43,8 +43,8 @@ public class PremadePizzaRestController {
      * @param category
      * @return List<Pizza>
      */
-    @GetMapping("")
-    public List<Pizza> getPizzaByCategory(@RequestParam("category") String category){
+    @GetMapping("/{category}")
+    public List<Pizza> getPizzaByCategory(@PathVariable("category") String category){
         RequestAttribute requestAttribute;
         List<Pizza> pizzas = null;
         try {
