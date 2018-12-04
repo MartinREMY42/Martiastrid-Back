@@ -15,7 +15,7 @@ import javax.naming.AuthenticationException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/token")
 public class AuthenticationRestController {
 
     @Autowired
