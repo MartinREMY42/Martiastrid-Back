@@ -16,4 +16,8 @@ public class CategoryService {
         Collection<String> categories = categoryDao.getAll();
         return categories.contains(category);
     }
+
+    public Collection<String> getAll(){
+        return categoryDao.getAll();
+    }
 }
