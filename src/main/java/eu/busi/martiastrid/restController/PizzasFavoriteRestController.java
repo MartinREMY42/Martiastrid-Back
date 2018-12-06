@@ -14,16 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(headers = "Accept=application/json")
+@RequestMapping(headers = "Accept=application/json",value = "/api/pizzasFavorite")
 @CrossOrigin("*")
 public class PizzasFavoriteRestController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/api/pizzasFavorite")
+    @GetMapping
     public ResponseEntity<List<Pizza>> getPizzasFavorite(){
-
         try {
             return new ResponseEntity<List<Pizza>>(userService.getPizzasFavorites(SecurityContextHolder.getContext().getAuthentication().getName()),
                     HttpStatus.OK);
@@ -34,9 +33,9 @@ public class PizzasFavoriteRestController {
     }
 
 
-    @GetMapping("/api/pizzasFavorite/{idPizza}")
+    @GetMapping("/{idPizza}")
     public ResponseEntity<List<Pizza>> switchPizzaFavoriteness(@PathVariable int idPizza){
-
+        System.out.println("##############" + idPizza);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<List<Pizza>>(userService.switchPizzaFavoriteness(username, idPizza),
                 HttpStatus.OK);
