@@ -26,8 +26,8 @@ public class UserRestController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<User> getUser(Principal principal){
+    public String getUser(Principal principal){
         User user = userService.getUser(principal.getName());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return user.getUsername();
     }
 }

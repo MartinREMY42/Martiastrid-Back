@@ -22,7 +22,6 @@ public class PizzasFavoriteRestController {
     private UserService userService;
 
     @GetMapping(value = "/api/pizzasFavorite")
-    @ResponseBody
     public ResponseEntity<List<Pizza>> getPizzasFavorite(){
 
         try {
@@ -32,7 +31,14 @@ public class PizzasFavoriteRestController {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
         }
+    }
 
 
+    @GetMapping("/api/pizzasFavorite/{idPizza}")
+    public ResponseEntity<List<Pizza>> switchPizzaFavoriteness(@PathVariable int idPizza){
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<List<Pizza>>(userService.switchPizzaFavoriteness(username, idPizza),
+                HttpStatus.OK);
     }
 }

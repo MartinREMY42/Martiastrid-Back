@@ -1,6 +1,8 @@
 package eu.busi.martiastrid.dataAccess.dao;
 
+import eu.busi.martiastrid.dataAccess.entity.PizzaEntity;
 import eu.busi.martiastrid.dataAccess.entity.UserEntity;
+import eu.busi.martiastrid.dataAccess.repository.PizzaRepository;
 import eu.busi.martiastrid.dataAccess.repository.UserRepository;
 import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaDatabaseException;
@@ -25,6 +27,8 @@ public class UserDao {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PizzaRepository pizzaRepository;
 
     public User saveNewUser(User user) throws PizzaDatabaseException {
         if (!Objects.isNull(userRepository.findByUsername(user.getUsername()))) {
@@ -46,6 +50,15 @@ public class UserDao {
             throw new PizzaDatabaseException(ERROR_USERNAME_TAKEN);
         }
 
+        return providerConverter.userEntityToModel(userEntity).getPizzasFavorites();
+    }
+
+    public Collection<Pizza> switchPizzaFavoriteness(String username, int idPizza)
+    {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        PizzaEntity pizzaEntity = pizzaRepository.getOne(idPizza);
+        userEntity.switchPizzaFavoriteness(pizzaEntity);
+        userRepository.save(userEntity);
         return providerConverter.userEntityToModel(userEntity).getPizzasFavorites();
     }
 

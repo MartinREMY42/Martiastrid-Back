@@ -27,4 +27,8 @@ public class UserService {
     public List<Pizza> getPizzasFavorites(String username) throws PizzaDatabaseException {
         return userDao.getAllPizzasFavority(username).stream().collect(Collectors.toList());
     }
+
+    public List<Pizza> switchPizzaFavoriteness(String username, int idPizza){
+        return userDao.switchPizzaFavoriteness(username, idPizza).stream().collect(Collectors.toList());
+    }
 }
