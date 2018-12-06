@@ -61,8 +61,8 @@ public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-//        http.addFilterBefore(authenticationTokenFilterBean(),
-//                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationTokenFilterBean(),
+                UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

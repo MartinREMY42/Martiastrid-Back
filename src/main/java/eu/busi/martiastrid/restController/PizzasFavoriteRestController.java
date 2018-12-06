@@ -21,7 +21,7 @@ public class PizzasFavoriteRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/api/pizzasFavorite",produces = "application/json")
+    @GetMapping(value = "/api/pizzasFavorite")
     @ResponseBody
     public ResponseEntity<List<Pizza>> getPizzasFavorite(){
 

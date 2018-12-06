@@ -27,7 +27,6 @@ public class UserRestController {
 
     @GetMapping
     public ResponseEntity<User> getUser(Principal principal){
-
         User user = userService.getUser(principal.getName());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
