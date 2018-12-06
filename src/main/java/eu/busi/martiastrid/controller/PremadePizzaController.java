@@ -42,7 +42,6 @@ public class PremadePizzaController {
     @Autowired
     private IngredientService ingredientService;
 
-
     @ModelAttribute(CART)
     public HashMap<Pizza, Integer> setupCart() {
         return new HashMap<>();
@@ -54,8 +53,6 @@ public class PremadePizzaController {
         model.addAttribute("pizzaCounter", new PizzaCounter());
         return "integratedWithMenu:premadePizzas";
     }
-
-
 
     @GetMapping(params = "category")
     public String showStandardPizzasFilter(Model model,
@@ -113,4 +110,5 @@ public class PremadePizzaController {
     public String showCustomPizzas() {
         return "integratedWithMenu:customPizzas";
     }
+
 }

@@ -4,8 +4,8 @@ server:
     context-path: /martiastrid
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/martiastrid_pizza?user=postgres&currentSchema=pizza
-    password: 1234
+    url: jdbc:postgresql://localhost:5432/martichal_pizza?user=app&currentSchema=pizza
+    password: app
   jpa:
     database: postgresql
     show-sql: true
