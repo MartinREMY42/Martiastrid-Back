@@ -43,7 +43,9 @@ public class CartService {
         try {
             Order order = orderDao.getOpenOrderForUser(username);
             if (!Objects.isNull(order.getOrderLines())) {
-                order.getOrderLines().stream().filter(orderLine -> orderLine.getQuantity() > 0).forEach(l -> cart.put(l.getPizza(), l.getQuantity()));
+                order.getOrderLines().stream()
+                        .filter(orderLine -> orderLine.getQuantity() > 0)
+                        .forEach(l -> cart.put(l.getPizza(), l.getQuantity()));
             }
         } catch (PizzaDatabaseException e) {
             throw new PizzaException(Constantsi18n.ERROR_RETRIEVING_ORDER_FROM_DB);

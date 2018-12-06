@@ -166,4 +166,21 @@ public class User {
     public void setPizzasFavorites(Collection<Pizza> pizzasFavorites) {
         this.pizzasFavorites = pizzasFavorites;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", nonExpired=" + nonExpired +
+                ", nonLocked=" + nonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", authorities=" + authorities +
+                ", birthDate=" + birthDate +
+                ", creationDate=" + creationDate +
+                ", orders=" + orders +
+                '}';
+    }
+
 }
