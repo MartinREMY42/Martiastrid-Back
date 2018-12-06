@@ -1,24 +1,21 @@
 package eu.busi.martiastrid.restController;
 
-import eu.busi.martiastrid.constants.Constants;
 import eu.busi.martiastrid.exception.PizzaException;
+import eu.busi.martiastrid.model.Ingredient;
 import eu.busi.martiastrid.model.Pizza;
-import eu.busi.martiastrid.service.CartService;
-import eu.busi.martiastrid.service.IngredientService;
-import eu.busi.martiastrid.service.OrderService;
+import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.service.PizzaService;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-@RestController
 @RequestMapping("/api/pizzas")
+@RestController
 @CrossOrigin("*")
 public class PremadePizzaRestController {
 
@@ -28,9 +25,8 @@ public class PremadePizzaRestController {
     /**
      * @return liste de toutes mes pizzas
      */
-
-    @GetMapping
-    public List getAll(){
+    @GetMapping("")
+    public List<Pizza> getAll(){
 
         List<Pizza> pizzas = pizzaService.getAllStandard().stream()
                 .collect(Collectors.toList());
@@ -54,5 +50,19 @@ public class PremadePizzaRestController {
             System.out.println(e.getMessage());
         }
         return pizzas;
+    }
+
+    /**
+     * @return le panier sous une forme de pseudo-map
+     */
+    @PostMapping("/addToCart")
+    public List<PizzaQuantity> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
+        System.out.println("first ---------------------------" + orderedPizza);
+        orderedPizza.add(
+                new PizzaQuantity(
+                        new Pizza(1, "genericPizzaName", 10, new ArrayList<>(), false, new TreeSet<>()),
+                        5));
+        System.out.println("then ---------------------------" + orderedPizza);
+        return orderedPizza;
     }
 }

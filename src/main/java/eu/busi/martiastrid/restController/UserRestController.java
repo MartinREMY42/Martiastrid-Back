@@ -19,6 +19,7 @@ import static eu.busi.martiastrid.constants.Constants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/whoIAm")
+@CrossOrigin("*")
 public class UserRestController {
 
     @Autowired
