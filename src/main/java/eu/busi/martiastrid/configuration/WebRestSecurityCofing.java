@@ -21,6 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTHORIZED_REQUESTS_ANYBODY = new String[]{
+            "/signup","/api/pizzas","",
+            "/api/token/generate-token",
+    };
+
     @Autowired
     @Qualifier("userDetailServiceImplementation")
     private UserDetailsService userDetailsService;
@@ -48,18 +53,17 @@ public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
+        //http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
 
-//        http.cors().and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/signup",
-//                        "/token/generate-token").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers(AUTHORIZED_REQUESTS_ANYBODY).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(authenticationTokenFilterBean(),
                 UsernamePasswordAuthenticationFilter.class);
