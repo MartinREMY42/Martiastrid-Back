@@ -160,6 +160,8 @@ public class ProviderConverter {
                 null
         );
         userEntity.setOrdersCollection(Objects.isNull(userModel.getOrders()) ? null :userModel.getOrders().stream().map(order -> orderModelToEntityWithUser(order, userEntity)).collect(Collectors.toSet()));
+        userEntity.setPizzasFavorites(Objects.isNull(userModel.getPizzasFavorites()) ? null : userModel.getPizzasFavorites().stream().map( pizza -> pizzaModelToEntity(pizza)).collect(Collectors.toSet()));
+
         return userEntity;
     }
 
@@ -189,6 +191,14 @@ public class ProviderConverter {
                                 .map(orderEntity -> orderEntityToModelWithUser(orderEntity, user))
                                 .collect(Collectors.toList())
         );
+        user.setPizzasFavorites(
+                Objects.isNull(userEntity.getPizzasFavorites()) ?
+                        null : userEntity.getPizzasFavorites()
+                                         .stream()
+                                         .map(pizzaEntity -> pizzaEntityToModel(pizzaEntity))
+                                         .collect(Collectors.toSet())
+        );
+
         return user;
     }
 

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pizzas")
+@CrossOrigin("*")
 public class PremadePizzaRestController {
 
     @Autowired

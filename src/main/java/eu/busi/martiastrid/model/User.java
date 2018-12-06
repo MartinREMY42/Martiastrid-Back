@@ -16,6 +16,7 @@ public class User {
     private Date birthDate;
     private Date creationDate;
     private Collection<Order> orders;
+    private Collection<Pizza> pizzasFavorites;
 
     public User() {
     }
@@ -47,6 +48,23 @@ public class User {
         this.birthDate = birthDate;
         this.creationDate = creationDate;
         this.orders = orders;
+    }
+
+    public User(String username, String password, Boolean enabled, Boolean nonExpired, Boolean nonLocked,
+                Boolean credentialsNonExpired, Collection<Authority> authorities,
+                Date birthDate, Date creationDate, Collection<Order> orders,
+                Collection<Pizza> pizzasFavorites) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.nonExpired = nonExpired;
+        this.nonLocked = nonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.authorities = authorities;
+        this.birthDate = birthDate;
+        this.creationDate = creationDate;
+        this.orders = orders;
+        this.pizzasFavorites = pizzasFavorites;
     }
 
     public boolean addAuthority(Authority authority) {
@@ -139,5 +157,13 @@ public class User {
 
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
+    }
+
+    public Collection<Pizza> getPizzasFavorites() {
+        return pizzasFavorites;
+    }
+
+    public void setPizzasFavorites(Collection<Pizza> pizzasFavorites) {
+        this.pizzasFavorites = pizzasFavorites;
     }
 }
