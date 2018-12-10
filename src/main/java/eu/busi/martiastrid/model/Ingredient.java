@@ -76,7 +76,7 @@ public class Ingredient implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(getId(), that.getId());
+        return this.id.equals(that.id);
     }
 
     @Override

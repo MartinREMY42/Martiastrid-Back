@@ -5,13 +5,14 @@ import eu.busi.martiastrid.model.Ingredient;
 import eu.busi.martiastrid.model.Pizza;
 import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.service.PizzaService;
-import org.hibernate.mapping.Collection;
+import eu.busi.martiastrid.service.authentication.CartRestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api/pizzas")
@@ -21,6 +22,9 @@ public class PremadePizzaRestController {
 
     @Autowired
     private PizzaService pizzaService;
+
+    @Autowired
+    private CartRestService cartRestService;
 
     /**
      * @return liste de toutes mes pizzas
@@ -56,13 +60,10 @@ public class PremadePizzaRestController {
      * @return le panier sous une forme de pseudo-map
      */
     @PostMapping("/addToCart")
-    public List<PizzaQuantity> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
-        System.out.println("first ---------------------------" + orderedPizza);
-        orderedPizza.add(
-                new PizzaQuantity(
-                        new Pizza(1, "genericPizzaName", 10, new ArrayList<>(), false, new TreeSet<>()),
-                        5));
-        System.out.println("then ---------------------------" + orderedPizza);
-        return orderedPizza;
+    public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
+        System.out.println("\n\n\nPremadePizzaRestController.addToCart");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(this.cartRestService.mergeToCurrentCart(orderedPizza, username),
+                HttpStatus.OK);
     }
 }

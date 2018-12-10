@@ -86,6 +86,7 @@ public class Pizza implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Pizza pizza = (Pizza) o;
         if (pizza.custom && this.custom) {
+            // comparer deux pizza custom se fait à la liste d'ingrédient
             int size = pizza.ingredients.size();
             if (size!=this.ingredients.size()) {
                 return false;
@@ -96,7 +97,11 @@ public class Pizza implements Serializable {
             ingredientsThis = this.ingredients.toArray(ingredientsThis);
             return Arrays.equals(ingredientsPizza, ingredientsThis);
         }
-        return Objects.equals(pizza.id, this.id);
+        if (!this.custom && !pizza.custom) {
+            // comparer deux pizza standard se fait à l'id
+            return pizza.id.equals(this.id);
+        }
+        return false; // une pizza custom et une standard sont différentes
         //return pizza.id.equals(this.id);
     }
 
@@ -107,12 +112,7 @@ public class Pizza implements Serializable {
 
     @Override
     public String toString() {
-        return "Pizza{" +
-                "id=" + id +
-                ", genericName='" + genericName + '\'' +
-                ", price=" + price +
-                ", ingredients=" + (ingredients==null ? "null" : ingredients.toString())+
-                ", custom=" + custom +
-                '}';
+        return this.custom ? this.ingredients.toString() :
+                this.genericName;
     }
 }
