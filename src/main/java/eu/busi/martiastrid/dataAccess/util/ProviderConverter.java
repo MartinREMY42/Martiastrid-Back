@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -202,4 +204,11 @@ public class ProviderConverter {
         return user;
     }
 
+    public HashMap<Integer, Integer> pizzaQuantityToPizzaCounter(List<PizzaQuantity> pizzaQuantities) {
+        HashMap<Integer, Integer> pizzaCounter = new HashMap<>();
+        pizzaQuantities.forEach( pq -> {
+            pizzaCounter.put(pq.getPizza().getId(), pq.getQuantity());
+        });
+        return pizzaCounter;
+    }
 }

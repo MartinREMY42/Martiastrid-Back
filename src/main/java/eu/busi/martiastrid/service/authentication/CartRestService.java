@@ -5,10 +5,8 @@ import eu.busi.martiastrid.exception.PizzaDatabaseException;
 import eu.busi.martiastrid.model.Order;
 import eu.busi.martiastrid.model.PizzaQuantity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
