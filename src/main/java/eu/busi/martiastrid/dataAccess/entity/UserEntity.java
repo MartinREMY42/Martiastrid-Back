@@ -201,4 +201,11 @@ public class UserEntity implements UserDetails, Serializable {
         this.pizzasFavorites = pizzas;
     }
 
+    public void switchPizzaFavoriteness(PizzaEntity pizzaEntity) {
+        if(this.pizzasFavorites.contains(pizzaEntity)){
+            this.pizzasFavorites.remove(pizzaEntity);
+        }else{
+            this.pizzasFavorites.add(pizzaEntity);
+        }
+    }
 }

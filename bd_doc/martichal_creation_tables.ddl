@@ -91,11 +91,10 @@ create table pizza.jt_pizza_category (
 	 fk_pizza integer not null,
 	 fk_category varchar(50) not null);
 	 
-create table pizza.recettes (
+create table pizza.jt_pizza_ingredient (
      id SERIAL not null,
      fk_ingredient integer not null,
      fk_pizza integer not null,
-	 quantity integer not null default 1,
      constraint IDrecettes primary key (id));
 										
 create table pizza.jt_user_pizzas (
@@ -104,7 +103,7 @@ create table pizza.jt_user_pizzas (
      fk_pizza integer not null,
      constraint IDjt_user_pizzas primary key (id));
 
-	 
+
 -- Constraints Section
 -- ___________________ 
 
@@ -132,11 +131,11 @@ alter table pizza.order_line add constraint GRorder_line_1
      foreign key (fk_pizza)
      references pizza.pizzas;
 
-alter table pizza.recettes add constraint GRrecettes
+alter table pizza.jt_pizza_ingredient add constraint GRrecettes
      foreign key (fk_ingredient)
      references pizza.ingredients;
 
-alter table pizza.recettes add constraint GRrecettes_1
+alter table pizza.jt_pizza_ingredient add constraint GRrecettes_1
      foreign key (fk_pizza)
      references pizza.pizzas;
 	 
@@ -156,9 +155,6 @@ alter table pizza.jt_user_pizzas add constraint GRjt_user_pizzas_1
 
 alter table pizza.jt_user_pizzas add constraint UqJtUserPizza
 	  UNIQUE(fk_user, fk_pizza);
-	  
-alter table pizza.recettes add constraint UqPizzaIngredient
-	  UNIQUE(fk_pizza, fk_ingredient);
 	 
 
 -- authorisation on tables for app user 
@@ -172,7 +168,7 @@ GRANT ALL ON TABLE pizza.orders TO app;
 GRANT ALL ON TABLE pizza.payment TO app;
 GRANT ALL ON TABLE pizza.order_line TO app;
 GRANT ALL ON TABLE pizza.pizzas TO app;
-GRANT ALL ON TABLE pizza.recettes TO app;	
+GRANT ALL ON TABLE pizza.jt_pizza_ingredient TO app;	
 GRANT ALL ON TABLE pizza.pizza_category TO app;	
 GRANT ALL ON TABLE pizza.jt_pizza_category TO app;
 GRANT ALL ON TABLE pizza.jt_user_pizzas TO app;											  
