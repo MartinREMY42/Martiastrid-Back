@@ -3,8 +3,8 @@ package eu.busi.martiastrid.dataAccess.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pizza_ingredient")
-public class PortionEntity {
+@Table(name = "recettes")
+public class RecetteEntity {
 
     @Id
     @Column(name = "id")
@@ -26,7 +26,7 @@ public class PortionEntity {
             CascadeType.REMOVE})
     private IngredientEntity ingredientEntity;
 
-    public PortionEntity(){}
+    public RecetteEntity(){}
 
     public Integer getId() {
         return id;
