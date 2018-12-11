@@ -98,6 +98,9 @@ public class Order implements Serializable {
         }
     }
 
+    public void removePizza(Integer id) {
+        orderLines.stream().filter(ol -> !ol.getPizza().getId().equals(id));
+    }
     public void addPizza(Pizza pizza, Integer quantity) {
         if (Objects.isNull(orderLines)) {
             orderLines = new ArrayList<>();

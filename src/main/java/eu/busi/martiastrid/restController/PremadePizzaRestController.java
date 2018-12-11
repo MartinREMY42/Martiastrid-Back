@@ -2,13 +2,12 @@ package eu.busi.martiastrid.restController;
 
 import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaException;
-import eu.busi.martiastrid.model.Ingredient;
 import eu.busi.martiastrid.model.Order;
 import eu.busi.martiastrid.model.Pizza;
 import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.service.OrderService;
 import eu.busi.martiastrid.service.PizzaService;
-import eu.busi.martiastrid.service.authentication.CartRestService;
+import eu.busi.martiastrid.service.restService.CartRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static eu.busi.martiastrid.constants.Constants.CART;
 
 @RequestMapping("/api/pizzas")
 @RestController
