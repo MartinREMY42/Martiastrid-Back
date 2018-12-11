@@ -177,7 +177,6 @@ public class UserEntity implements UserDetails, Serializable {
     }
 
     public void setBirthDate(Date birthDate) {
-        System.out.println("-------------------------------------------------\ndate de naissance : " + birthDate);
         this.birthDate = birthDate;
     }
 

@@ -20,7 +20,6 @@ public class CartRestService {
     private OrderDao orderDao;
 
     public List<PizzaQuantity> getUserCart(String username) {
-        System.out.println("\n\n\n\n CartRestService.getUserCart : ");
         List<PizzaQuantity> cart = new ArrayList<>();
 
         try {

@@ -70,7 +70,6 @@ public class PremadePizzaRestController {
      */
     @PostMapping("/addToCart")
     public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
-        System.out.println("\n\n\nPremadePizzaRestController.addToCart");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
         try {

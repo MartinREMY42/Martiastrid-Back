@@ -140,7 +140,6 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-        System.out.println("-------------------------------------------------\ndate de naissance : " + birthDate);
     }
 
     public Date getCreationDate() {

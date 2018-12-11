@@ -62,15 +62,11 @@ public class CartRestController {
     @PostMapping("/remove")
     ResponseEntity<List<PizzaQuantity>> removeFromCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        // debug
-        List<PizzaQuantity> oldcart = this.cartRestService.getUserCart(username);
         this.cartRestService.remove(pizza, username);
 
         Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
         order.removePizza(pizza.getId());
         orderService.saveOrderInDatabase(order);
-        // debug
-        List<PizzaQuantity> newcart = this.cartRestService.getUserCart(username);
         return new ResponseEntity<>(this.cartRestService.getUserCart(username), HttpStatus.OK);
     }
 

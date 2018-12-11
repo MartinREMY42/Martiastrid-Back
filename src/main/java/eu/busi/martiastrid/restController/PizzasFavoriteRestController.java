@@ -24,7 +24,8 @@ public class PizzasFavoriteRestController {
     @GetMapping
     public ResponseEntity<List<Pizza>> getPizzasFavorite(){
         try {
-            return new ResponseEntity<List<Pizza>>(userService.getPizzasFavorites(SecurityContextHolder.getContext().getAuthentication().getName()),
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            return new ResponseEntity<>(userService.getPizzasFavorites(username),
                     HttpStatus.OK);
         } catch (PizzaDatabaseException e) {
             System.out.println(e.getMessage());
@@ -35,7 +36,6 @@ public class PizzasFavoriteRestController {
 
     @GetMapping("/{idPizza}")
     public ResponseEntity<List<Pizza>> switchPizzaFavoriteness(@PathVariable int idPizza){
-        System.out.println("##############" + idPizza);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<List<Pizza>>(userService.switchPizzaFavoriteness(username, idPizza),
                 HttpStatus.OK);
