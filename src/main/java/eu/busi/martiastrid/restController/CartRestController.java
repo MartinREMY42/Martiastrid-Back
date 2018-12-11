@@ -40,34 +40,38 @@ public class CartRestController {
     @PostMapping("/increment")
     ResponseEntity<List<PizzaQuantity>> incrementCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<PizzaQuantity> cart = this.cartRestService.increment(pizza, username);
+        this.cartRestService.increment(pizza, username);
 
         Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
         order.incrementPizza(pizza.getId());
         orderService.saveOrderInDatabase(order);
-        return new ResponseEntity<>(cart, HttpStatus.OK);
+        return new ResponseEntity<>(this.cartRestService.getUserCart(username), HttpStatus.OK);
     }
 
     @PostMapping("/decrement")
     ResponseEntity<List<PizzaQuantity>> decrementCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<PizzaQuantity> cart = this.cartRestService.decrement(pizza, username);
+        this.cartRestService.decrement(pizza, username);
 
         Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
         order.decrementPizza(pizza.getId());
         orderService.saveOrderInDatabase(order);
-        return new ResponseEntity<>(cart, HttpStatus.OK);
+        return new ResponseEntity<>(this.cartRestService.getUserCart(username), HttpStatus.OK);
     }
 
     @PostMapping("/remove")
     ResponseEntity<List<PizzaQuantity>> removeFromCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<PizzaQuantity> cart = this.cartRestService.remove(pizza, username);
+        // debug
+        List<PizzaQuantity> oldcart = this.cartRestService.getUserCart(username);
+        this.cartRestService.remove(pizza, username);
 
         Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
         order.removePizza(pizza.getId());
         orderService.saveOrderInDatabase(order);
-        return new ResponseEntity<>(cart, HttpStatus.OK);
+        // debug
+        List<PizzaQuantity> newcart = this.cartRestService.getUserCart(username);
+        return new ResponseEntity<>(this.cartRestService.getUserCart(username), HttpStatus.OK);
     }
 
 }
