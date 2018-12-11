@@ -21,6 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTHORIZED_REQUESTS_ANYBODY = new String[]{
+            "/signup","/api/pizzas","",
+            "/api/token/generate-token",
+    };
+
     @Autowired
     @Qualifier("userDetailServiceImplementation")
     private UserDetailsService userDetailsService;
@@ -28,8 +33,8 @@ public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
-    @Bean
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

@@ -1,5 +1,7 @@
 package eu.busi.martiastrid.model;
 
+import java.util.Objects;
+
 public class PizzaQuantity {
     private Pizza pizza;
     private int quantity;
@@ -35,4 +37,18 @@ public class PizzaQuantity {
                 ", quantity=" + quantity +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PizzaQuantity that = (PizzaQuantity) o;
+        return Objects.equals(pizza, that.pizza);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pizza);
+    }
+
 }
