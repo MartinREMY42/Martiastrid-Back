@@ -38,6 +38,9 @@ public class PizzaEntity implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "fk_category"))
     private Set<CategoryEntity> categoryEntity;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaEntity",  orphanRemoval = true)
+    private Collection<PortionEntity> portionEntities;
+
     public PizzaEntity() {
     }
 
@@ -100,5 +103,11 @@ public class PizzaEntity implements Serializable {
         this.categoryEntity = categoryEntity;
     }
 
+    public Collection<PortionEntity> getPortionEntities() {
+        return portionEntities;
+    }
 
+    public void setPortionEntities(Collection<PortionEntity> portionEntities) {
+        this.portionEntities = portionEntities;
+    }
 }

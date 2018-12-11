@@ -40,7 +40,6 @@ public class PremadePizzaRestController {
      */
     @GetMapping("")
     public List<Pizza> getAll(){
-
         List<Pizza> pizzas = pizzaService.getAllStandard().stream()
                 .collect(Collectors.toList());
         return pizzas;
@@ -70,7 +69,6 @@ public class PremadePizzaRestController {
      */
     @PostMapping("/addToCart")
     public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
-        System.out.println("\n\n\nPremadePizzaRestController.addToCart");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
         try {
