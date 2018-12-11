@@ -159,75 +159,75 @@ insert INTO pizza.jt_pizza_category(
 -- standard pizzas ingredients
 -- ___________________
 
-INSERT INTO pizza.jt_pizza_ingredient(
+INSERT INTO pizza.recettes(
     fk_ingredient, fk_pizza)
     VALUES (5, 1);
-INSERT INTO pizza.jt_pizza_ingredient(
+INSERT INTO pizza.recettes(
     fk_ingredient, fk_pizza)
     VALUES (10, 1);
 
 
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (5, 2);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (9, 2);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (10, 2);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (11, 2);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (5, 2, 2);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (9, 2, 1);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (10, 2,3);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (11, 2,2);
 
 
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (1, 3);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (5, 3);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (8, 3);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (10, 3);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (12, 3);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (1, 3,5);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (5, 3,6);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (8, 3,7);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (10, 3,8);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (12, 3,10);
 
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (2, 4);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (3, 4);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (4, 4);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (7, 4);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (10, 4);
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (11, 4);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (2, 4,11);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (3, 4,2);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (4, 4,3);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (7, 4,3);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (10, 4,2);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (11, 4,2);
 
 
 
 -- custom pizzas ingredients
 -- ___________________
 
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (2, 5);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (2, 5,3);
 
-INSERT INTO pizza.jt_pizza_ingredient(
-    fk_ingredient, fk_pizza)
-    VALUES (1, 6);
+INSERT INTO pizza.recettes(
+    fk_ingredient, fk_pizza,quantity)
+    VALUES (1, 6,6);
 
 -- orders
 -- ___________________

@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "pizzas")
+@Table(name = "recettes")
 public class PizzaEntity implements Serializable {
 
     @Id
@@ -37,6 +37,9 @@ public class PizzaEntity implements Serializable {
                 joinColumns = @JoinColumn(name = "fk_pizza"),
     inverseJoinColumns = @JoinColumn(name = "fk_category"))
     private Set<CategoryEntity> categoryEntity;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaEntity",  orphanRemoval = true)
+    private Collection<PortionEntity> portionEntities;
 
     public PizzaEntity() {
     }
@@ -100,5 +103,15 @@ public class PizzaEntity implements Serializable {
         this.categoryEntity = categoryEntity;
     }
 
+    public Boolean getCustom() {
+        return custom;
+    }
 
+    public Collection<PortionEntity> getPortionEntities() {
+        return portionEntities;
+    }
+
+    public void setPortionEntities(Collection<PortionEntity> portionEntities) {
+        this.portionEntities = portionEntities;
+    }
 }
