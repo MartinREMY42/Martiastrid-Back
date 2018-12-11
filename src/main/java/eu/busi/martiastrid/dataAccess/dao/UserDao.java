@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 
 import static eu.busi.martiastrid.constants.Constantsi18n.ERROR_USERNAME_TAKEN;
 
@@ -58,15 +57,7 @@ public class UserDao {
     {
         UserEntity userEntity = userRepository.findByUsername(username);
         PizzaEntity pizzaEntity = pizzaRepository.getOne(idPizza);
-
-        Set<PizzaEntity> favorites = userEntity.getPizzasFavorites();
-
-        if(favorites.contains(pizzaEntity)){
-            favorites.remove(pizzaEntity);
-        }else{
-            favorites.add(pizzaEntity);
-        }
-        userEntity.setPizzasFavorites(favorites);
+        userEntity.switchPizzaFavoriteness(pizzaEntity);
         userRepository.save(userEntity);
         return providerConverter.userEntityToModel(userEntity).getPizzasFavorites();
     }
