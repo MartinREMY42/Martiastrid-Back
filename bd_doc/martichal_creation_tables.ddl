@@ -80,22 +80,22 @@ create table pizza.pizza_category(
 	constraint IDpizzaCategory primary key(category));
 
 create table pizza.pizzas (
-  id SERIAL not null,
-  generic_name varchar(50) not null,
-  price integer not null,
-	custom boolean not null,
-	delete_flag boolean not null DEFAULT false,
-  constraint IDpizzas primary key (id));
-	 
+     id SERIAL not null,
+     generic_name varchar(50) not null,
+     price integer not null,
+	 custom boolean not null,
+	 delete_flag boolean not null DEFAULT false,
+     constraint IDpizzas primary key (id));
+
 create table pizza.jt_pizza_category (
 	 fk_pizza integer not null,
 	 fk_category varchar(50) not null);
-	 
+
 create table pizza.recettes (
      id SERIAL not null,
      fk_ingredient integer not null,
      fk_pizza integer not null,
-	 quantity integer not null DEFAULT 1,
+	 quantity integer not null default 1,
      constraint IDrecettes primary key (id));
 										
 create table pizza.jt_user_pizzas (
@@ -104,7 +104,7 @@ create table pizza.jt_user_pizzas (
      fk_pizza integer not null,
      constraint IDjt_user_pizzas primary key (id));
 
-
+	 
 -- Constraints Section
 -- ___________________ 
 

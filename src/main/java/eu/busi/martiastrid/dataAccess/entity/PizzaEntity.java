@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "pizzas")
+@Table(name = "recettes")
 public class PizzaEntity implements Serializable {
 
     @Id
@@ -101,6 +101,10 @@ public class PizzaEntity implements Serializable {
 
     public void setCategoryEntity(Set<CategoryEntity> categoryEntity) {
         this.categoryEntity = categoryEntity;
+    }
+
+    public Boolean getCustom() {
+        return custom;
     }
 
     public Collection<PortionEntity> getPortionEntities() {
