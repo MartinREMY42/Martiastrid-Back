@@ -1,14 +1,18 @@
 package eu.busi.martiastrid.dataAccess.dao;
 
+import eu.busi.martiastrid.dataAccess.entity.PizzaEntity;
 import eu.busi.martiastrid.dataAccess.entity.UserEntity;
+import eu.busi.martiastrid.dataAccess.repository.PizzaRepository;
 import eu.busi.martiastrid.dataAccess.repository.UserRepository;
 import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaDatabaseException;
+import eu.busi.martiastrid.model.Pizza;
 import eu.busi.martiastrid.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Objects;
 
 import static eu.busi.martiastrid.constants.Constantsi18n.ERROR_USERNAME_TAKEN;
@@ -23,6 +27,8 @@ public class UserDao {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PizzaRepository pizzaRepository;
 
     public User saveNewUser(User user) throws PizzaDatabaseException {
         if (!Objects.isNull(userRepository.findByUsername(user.getUsername()))) {
@@ -35,6 +41,25 @@ public class UserDao {
 
     public User getByUsername(String username) {
         return providerConverter.userEntityToModel(userRepository.findByUsername(username));
+    }
+
+    public Collection<Pizza> getAllPizzasFavority(String username) throws PizzaDatabaseException{
+
+        UserEntity userEntity = userRepository.findByUsername(username);
+        if (Objects.isNull(userEntity)) {
+            throw new PizzaDatabaseException(ERROR_USERNAME_TAKEN);
+        }
+
+        return providerConverter.userEntityToModel(userEntity).getPizzasFavorites();
+    }
+
+    public Collection<Pizza> switchPizzaFavoriteness(String username, int idPizza)
+    {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        PizzaEntity pizzaEntity = pizzaRepository.getOne(idPizza);
+        userEntity.switchPizzaFavoriteness(pizzaEntity);
+        userRepository.save(userEntity);
+        return providerConverter.userEntityToModel(userEntity).getPizzasFavorites();
     }
 
 }

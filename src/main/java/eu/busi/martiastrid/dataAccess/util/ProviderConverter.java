@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -160,6 +162,8 @@ public class ProviderConverter {
                 null
         );
         userEntity.setOrdersCollection(Objects.isNull(userModel.getOrders()) ? null :userModel.getOrders().stream().map(order -> orderModelToEntityWithUser(order, userEntity)).collect(Collectors.toSet()));
+        userEntity.setPizzasFavorites(Objects.isNull(userModel.getPizzasFavorites()) ? null : userModel.getPizzasFavorites().stream().map( pizza -> pizzaModelToEntity(pizza)).collect(Collectors.toSet()));
+
         return userEntity;
     }
 
@@ -189,7 +193,22 @@ public class ProviderConverter {
                                 .map(orderEntity -> orderEntityToModelWithUser(orderEntity, user))
                                 .collect(Collectors.toList())
         );
+        user.setPizzasFavorites(
+                Objects.isNull(userEntity.getPizzasFavorites()) ?
+                        null : userEntity.getPizzasFavorites()
+                                         .stream()
+                                         .map(pizzaEntity -> pizzaEntityToModel(pizzaEntity))
+                                         .collect(Collectors.toSet())
+        );
+
         return user;
     }
 
+    public HashMap<Integer, Integer> pizzaQuantityToPizzaCounter(List<PizzaQuantity> pizzaQuantities) {
+        HashMap<Integer, Integer> pizzaCounter = new HashMap<>();
+        pizzaQuantities.forEach( pq -> {
+            pizzaCounter.put(pq.getPizza().getId(), pq.getQuantity());
+        });
+        return pizzaCounter;
+    }
 }

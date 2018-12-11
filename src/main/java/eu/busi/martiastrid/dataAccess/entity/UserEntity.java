@@ -1,5 +1,6 @@
 package eu.busi.martiastrid.dataAccess.entity;
 
+import eu.busi.martiastrid.model.Pizza;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -60,6 +61,12 @@ public class UserEntity implements UserDetails, Serializable {
                 inverseJoinColumns = @JoinColumn(name = "fk_authority"))
     private Set<AuthorityEntity> authorities;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "jt_user_pizzas",
+                joinColumns = @JoinColumn(name = "fk_user"),
+                inverseJoinColumns = @JoinColumn(name = "fk_pizza"))
+    private Set<PizzaEntity> pizzasFavorites;
+
     public UserEntity() {
     }
 
@@ -81,6 +88,22 @@ public class UserEntity implements UserDetails, Serializable {
         this.birthDate = birthDate;
         this.authorities = authorities;
         this.ordersCollection = orderEntities;
+    }
+
+    public UserEntity(String username, String password, boolean enabled, boolean accountNonExpired,
+                      boolean accountNonLocked, boolean credentialsNonExpired, Date creationDate, Date birthDate,
+                      Set<OrderEntity> ordersCollection, Set<AuthorityEntity> authorities, Set<PizzaEntity> pizzasFavorites) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.creationDate = creationDate;
+        this.birthDate = birthDate;
+        this.ordersCollection = ordersCollection;
+        this.authorities = authorities;
+        this.pizzasFavorites = pizzasFavorites;
     }
 
     public String getUsername() {
@@ -166,5 +189,23 @@ public class UserEntity implements UserDetails, Serializable {
         this.ordersCollection = ordersCollection;
     }
 
+    public void setAuthorities(Set<AuthorityEntity> authorities) {
+        this.authorities = authorities;
+    }
 
+    public Set<PizzaEntity> getPizzasFavorites() {
+        return pizzasFavorites;
+    }
+
+    public void setPizzasFavorites(Set<PizzaEntity> pizzas) {
+        this.pizzasFavorites = pizzas;
+    }
+
+    public void switchPizzaFavoriteness(PizzaEntity pizzaEntity) {
+        if(this.pizzasFavorites.contains(pizzaEntity)){
+            this.pizzasFavorites.remove(pizzaEntity);
+        }else{
+            this.pizzasFavorites.add(pizzaEntity);
+        }
+    }
 }

@@ -1,36 +1,45 @@
 package eu.busi.martiastrid.restController;
 
-import eu.busi.martiastrid.constants.Constants;
+import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaException;
+import eu.busi.martiastrid.model.Order;
 import eu.busi.martiastrid.model.Pizza;
-import eu.busi.martiastrid.service.CartService;
-import eu.busi.martiastrid.service.IngredientService;
+import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.service.OrderService;
 import eu.busi.martiastrid.service.PizzaService;
+import eu.busi.martiastrid.service.restService.CartRestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequestMapping("/api/pizzas")
 @RestController
-@RequestMapping("/pizzas")
 @CrossOrigin("*")
 public class PremadePizzaRestController {
 
     @Autowired
+    private ProviderConverter providerConverter;
+
+    @Autowired
     private PizzaService pizzaService;
+
+    @Autowired
+    private CartRestService cartRestService;
+
+    @Autowired
+    private OrderService orderService;
 
     /**
      * @return liste de toutes mes pizzas
      */
-
-    @GetMapping("/")
-    public List getAll(){
+    @GetMapping("")
+    public List<Pizza> getAll(){
 
         List<Pizza> pizzas = pizzaService.getAllStandard().stream()
                 .collect(Collectors.toList());
@@ -43,8 +52,8 @@ public class PremadePizzaRestController {
      * @param category
      * @return List<Pizza>
      */
-    @GetMapping("")
-    public List<Pizza> getPizzaByCategory(@RequestParam("category") String category){
+    @GetMapping("/{category}")
+    public List<Pizza> getPizzaByCategory(@PathVariable("category") String category){
         RequestAttribute requestAttribute;
         List<Pizza> pizzas = null;
         try {
@@ -55,4 +64,25 @@ public class PremadePizzaRestController {
         }
         return pizzas;
     }
+
+    /**
+     * @return le panier sous une forme de pseudo-map
+     */
+    @PostMapping("/addToCart")
+    public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
+        System.out.println("\n\n\nPremadePizzaRestController.addToCart");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
+        try {
+            Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
+            HashMap<Integer, Integer> pizzaCounter = providerConverter.pizzaQuantityToPizzaCounter(orderedPizza);
+            orderService.addAllPizzasToOrder(pizzaCounter, order);
+            orderService.saveOrderInDatabase(order);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        } catch (PizzaException p) {
+            // TODO : permettre de transmettre ça en message au front
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        }
+    }
+
 }

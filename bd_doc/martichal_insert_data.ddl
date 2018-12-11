@@ -261,3 +261,21 @@ INSERT INTO pizza.order_line(
 INSERT INTO pizza.order_line(
     fk_order, fk_pizza, quantity)
     VALUES (1, 5, 5);
+	
+	
+-- user pizzas favorites
+-- ___________________
+
+INSERT INTO pizza.jt_user_pizzas(
+    fk_user, fk_pizza)
+    VALUES ('jean', 1);
+INSERT INTO pizza.jt_user_pizzas(
+    fk_user, fk_pizza)
+    VALUES ('jean', 2);
+INSERT INTO pizza.jt_user_pizzas(
+    fk_user, fk_pizza)
+    VALUES ('jean', 3);	
+	
+	
+	
+	

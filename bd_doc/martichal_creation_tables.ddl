@@ -96,6 +96,12 @@ create table pizza.jt_pizza_ingredient (
      fk_ingredient integer not null,
      fk_pizza integer not null,
      constraint IDrecettes primary key (id));
+										
+create table pizza.jt_user_pizzas (
+     id SERIAL not null,
+     fk_user varchar(50) not null,
+     fk_pizza integer not null,
+     constraint IDjt_user_pizzas primary key (id));
 
 
 -- Constraints Section
@@ -138,6 +144,17 @@ alter table pizza.jt_pizza_category add constraint UqJtPizzaCategory
 	  
 alter table pizza.orders add constraint UqordersUsernamePayment
 	  UNIQUE(fk_user, fk_payment);
+												   
+alter table pizza.jt_user_pizzas add constraint GRjt_user_pizzas
+     foreign key (fk_user)
+     references pizza.users;
+
+alter table pizza.jt_user_pizzas add constraint GRjt_user_pizzas_1
+     foreign key (fk_pizza)
+     references pizza.pizzas;
+
+alter table pizza.jt_user_pizzas add constraint UqJtUserPizza
+	  UNIQUE(fk_user, fk_pizza);
 	 
 
 -- authorisation on tables for app user 
@@ -154,6 +171,7 @@ GRANT ALL ON TABLE pizza.pizzas TO app;
 GRANT ALL ON TABLE pizza.jt_pizza_ingredient TO app;	
 GRANT ALL ON TABLE pizza.pizza_category TO app;	
 GRANT ALL ON TABLE pizza.jt_pizza_category TO app;
+GRANT ALL ON TABLE pizza.jt_user_pizzas TO app;											  
 
 
 

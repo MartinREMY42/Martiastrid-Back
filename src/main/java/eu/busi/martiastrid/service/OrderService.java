@@ -37,7 +37,6 @@ public class OrderService {
     @Autowired
     private IngredientService ingredientService;
 
-
     public void closePayedOrder(String refPaypal, int sum) throws PizzaException {
         try {
             Order order = orderDao.getOpenOrderForUser(authenticationFacade.getAuthentication().getName());
@@ -71,6 +70,29 @@ public class OrderService {
         }
     }
 
+    // rest equivalent
+    public Order getOrderForConnectedUserOrCreateIfNonExistent(String username) {
+        Order order;
+        try {
+            order = orderDao.getOpenOrderForUser(username);
+        } catch (PizzaDatabaseException e) {
+            User user = userDao.getByUsername(username);
+
+            order = new Order(
+                    null,
+                    Date.valueOf(LocalDate.now()),
+                    null,
+                    0,
+                    null,
+                    user,
+                    null
+            );
+
+            order = orderDao.save(order);
+        }
+        return order;
+    }
+
     public Order getOrderForConnectedUserOrCreateIfNonExistent() {
         Order order;
         try {
@@ -91,6 +113,20 @@ public class OrderService {
             order = orderDao.save(order);
         }
         return order;
+    }
+
+    // rest equivalent
+    public void createOrderForConnectedUser(String username) {
+        Order order = new Order(
+                null,
+                Date.valueOf(LocalDate.now()),
+                null,
+                0,
+                null,
+                userDao.getByUsername(authenticationFacade.getAuthentication().getName()),
+                null
+        );
+        orderDao.save(order);
     }
 
     public void createOrderForConnectedUser() {
@@ -134,4 +170,5 @@ public class OrderService {
     public void saveOrderInDatabase(Order order) {
         orderDao.save(order);
     }
+
 }
