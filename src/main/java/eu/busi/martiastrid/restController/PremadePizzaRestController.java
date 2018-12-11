@@ -40,7 +40,6 @@ public class PremadePizzaRestController {
      */
     @GetMapping("")
     public List<Pizza> getAll(){
-
         List<Pizza> pizzas = pizzaService.getAllStandard().stream()
                 .collect(Collectors.toList());
         return pizzas;

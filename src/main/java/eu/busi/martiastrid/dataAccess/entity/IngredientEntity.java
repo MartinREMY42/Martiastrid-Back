@@ -2,6 +2,7 @@ package eu.busi.martiastrid.dataAccess.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
 
 @Entity
@@ -23,6 +24,9 @@ public class IngredientEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "price_for_composition")
     private int priceForComposition;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ingredientEntity",  orphanRemoval = true)
+    private Collection<PortionEntity> portionEntities;
 
     public IngredientEntity() {
     }
@@ -64,6 +68,14 @@ public class IngredientEntity implements Serializable {
 
     public void setPriceForComposition(int priceForComposition) {
         this.priceForComposition = priceForComposition;
+    }
+
+    public Collection<PortionEntity> getPortionEntities() {
+        return portionEntities;
+    }
+
+    public void setPortionEntities(Collection<PortionEntity> portionEntities) {
+        this.portionEntities = portionEntities;
     }
 
     @Override
