@@ -79,7 +79,7 @@ public class CustomPizzaController {
 
         boolean isUserConnected = ! Objects.isNull(request.getUserPrincipal());
         try {
-            Pizza customPizza = pizzaService.createCustomPizza(allIngredientsSelected.getIngredients());
+            Pizza customPizza = pizzaService.createNonStandardPizza(allIngredientsSelected.getIngredients());
 
             if (! isUserConnected) {
                 cartService.addCustomPizzasToCart(customPizza, cart, quantity);

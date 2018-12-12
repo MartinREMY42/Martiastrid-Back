@@ -11,20 +11,18 @@ public class Pizza implements Serializable {
     private Integer id;
     private String genericName;
     private Integer price;
-    private ArrayList<Ingredient> ingredients ;
-    private Boolean custom;
+    private ArrayList<Recipe> recipes;
     private Set<String> category;
 
     public Pizza() {
     }
 
-    public Pizza(Integer id, String genericName, Integer price, Collection<Ingredient> ingredients,
-                 Boolean custom, Set<String> category) {
+    public Pizza(Integer id, String genericName, Integer price, Collection<Recipe> recipes,
+                 Set<String> category) {
         this.id = id;
         this.genericName = genericName;
         this.price = price;
-        this.ingredients = new ArrayList<>(ingredients);
-        this.custom = custom;
+        this.recipes = new ArrayList<>(recipes);
         this.category = category;
     }
 
@@ -53,23 +51,19 @@ public class Pizza implements Serializable {
     }
 
     public Boolean isCustom() {
-        return custom;
+        return this.genericName.equals("CustomPizza");
     }
 
     public Boolean getCustom() {
-        return custom;
+        return this.isCustom();
     }
 
-    public void setCustom(Boolean custom) {
-        this.custom = custom;
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     public Set<String> getCategory() {
@@ -85,19 +79,19 @@ public class Pizza implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pizza pizza = (Pizza) o;
-        if (pizza.custom && this.custom) {
+        if (pizza.isCustom() && this.isCustom()) {
             // comparer deux pizza custom se fait à la liste d'ingrédient
-            int size = pizza.ingredients.size();
-            if (size!=this.ingredients.size()) {
+            int size = pizza.recipes.size();
+            if (size!=this.recipes.size()) {
                 return false;
             }
-            Ingredient[] ingredientsPizza = new Ingredient[size];
-            ingredientsPizza = pizza.ingredients.toArray(ingredientsPizza);
-            Ingredient[] ingredientsThis = new Ingredient[size];
-            ingredientsThis = this.ingredients.toArray(ingredientsThis);
-            return Arrays.equals(ingredientsPizza, ingredientsThis);
+            Recipe[] recettesPizza = new Recipe[size];
+            recettesPizza = pizza.recipes.toArray(recettesPizza);
+            Recipe[] recettesThis = new Recipe[size];
+            recettesThis = this.recipes.toArray(recettesThis);
+            return Arrays.equals(recettesPizza, recettesThis);
         }
-        if (!this.custom && !pizza.custom) {
+        if (!this.isCustom() && !pizza.isCustom()) {
             // comparer deux pizza standard se fait à l'id
             return pizza.id.equals(this.id);
         }
@@ -107,12 +101,12 @@ public class Pizza implements Serializable {
 
     @Override
     public int hashCode() {
-        return custom ? Objects.hash(ingredients) : Objects.hash(id);
+        return isCustom() ? Objects.hash(recipes) : Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return this.custom ? this.ingredients.toString() :
+        return this.isCustom() ? this.recipes.toString() :
                 this.genericName;
     }
 }

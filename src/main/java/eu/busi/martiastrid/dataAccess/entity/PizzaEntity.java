@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name = "recettes")
+@Table(name = "pizzas")
 public class PizzaEntity implements Serializable {
 
     @Id
@@ -24,13 +24,10 @@ public class PizzaEntity implements Serializable {
     private int price;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "jt_pizza_ingredient",
+    @JoinTable(name = "jt_pizza_recipes",
             joinColumns = @JoinColumn(name = "fk_pizza"),
-            inverseJoinColumns = @JoinColumn(name = "fk_ingredient"))
-    private Collection<IngredientEntity> ingredients;
-
-    @Column(name = "custom")
-    private Boolean custom;
+            inverseJoinColumns = @JoinColumn(name = "fk_recipes"))
+    private Collection<RecipeEntity> recipeEntities;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "jt_pizza_category",
@@ -39,19 +36,18 @@ public class PizzaEntity implements Serializable {
     private Set<CategoryEntity> categoryEntity;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaEntity",  orphanRemoval = true)
-    private Collection<PortionEntity> portionEntities;
+    private Collection<RecipeEntity> recipeEntities;
 
     public PizzaEntity() {
     }
 
     public PizzaEntity(Integer id, String genericName, int price,
-                       Collection<IngredientEntity> ingredients, boolean custom,
+                       Collection<RecipeEntity> recipes, boolean custom,
                        Set<CategoryEntity> categoryEntity) {
         this.id = id;
         this.genericName = genericName;
         this.price = price;
-        this.ingredients = ingredients;
-        this.custom = custom;
+        this.recipes = recipes;
         this.categoryEntity = categoryEntity;
     }
 
@@ -88,11 +84,7 @@ public class PizzaEntity implements Serializable {
     }
 
     public Boolean isCustom() {
-        return custom;
-    }
-
-    public void setCustom(Boolean custom) {
-        this.custom = custom;
+        return this.genericName.equals("CustomPizza");
     }
 
     public Set<CategoryEntity> getCategoryEntity() {
@@ -104,14 +96,8 @@ public class PizzaEntity implements Serializable {
     }
 
     public Boolean getCustom() {
-        return custom;
+        return this.isCustom();
     }
 
-    public Collection<PortionEntity> getPortionEntities() {
-        return portionEntities;
-    }
 
-    public void setPortionEntities(Collection<PortionEntity> portionEntities) {
-        this.portionEntities = portionEntities;
-    }
 }

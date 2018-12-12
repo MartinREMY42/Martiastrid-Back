@@ -4,33 +4,33 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "order_line")
-public class OrderLineEntity implements Serializable {
+@Table(name = "recettes")
+public class RecipeEntity implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Basic(optional = false)
     @Column(name = "quantity")
     private int quantity;
 
-    @JoinColumn(name = "fk_order", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private OrderEntity fkOrder;
-    
     @JoinColumn(name = "fk_pizza", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @ManyToOne(optional = false)
     private PizzaEntity fkPizza;
 
-    public OrderLineEntity() {}
+    @JoinColumn(name = "fk_ingredient", referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    private IngredientEntity fkIngredient;
 
-    public OrderLineEntity(Integer id, int quantity, OrderEntity fkOrder, PizzaEntity fkPizza) {
+    public RecipeEntity(){}
+
+    public RecipeEntity(Integer id, int quantity, PizzaEntity fkPizza, IngredientEntity fkIngredient) {
         this.id = id;
         this.quantity = quantity;
-        this.fkOrder = fkOrder;
         this.fkPizza = fkPizza;
+        this.fkIngredient = fkIngredient;
     }
 
     public Integer getId() {
@@ -49,14 +49,6 @@ public class OrderLineEntity implements Serializable {
         this.quantity = quantity;
     }
 
-    public OrderEntity getFkOrder() {
-        return fkOrder;
-    }
-
-    public void setFkOrder(OrderEntity fkOrder) {
-        this.fkOrder = fkOrder;
-    }
-
     public PizzaEntity getFkPizza() {
         return fkPizza;
     }
@@ -65,13 +57,11 @@ public class OrderLineEntity implements Serializable {
         this.fkPizza = fkPizza;
     }
 
-    @Override
-    public String toString() {
-        return "OrderLineEntity{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", fkOrder=" + fkOrder.getId() +
-                ", fkPizza=" + fkPizza +
-                "}\n";
+    public IngredientEntity getFkIngredient() {
+        return fkIngredient;
+    }
+
+    public void setFkIngredient(IngredientEntity fkIngredient) {
+        this.fkIngredient = fkIngredient;
     }
 }

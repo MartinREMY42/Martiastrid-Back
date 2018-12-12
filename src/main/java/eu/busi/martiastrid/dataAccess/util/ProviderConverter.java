@@ -131,7 +131,6 @@ public class ProviderConverter {
                 pizzaEntity.getGenericName(),
                 pizzaEntity.getPrice(),
                 pizzaEntity.getIngredients().stream().map(this::ingredientEntityToModel).collect(Collectors.toList()),
-                pizzaEntity.isCustom(),
                 Objects.isNull(pizzaEntity.getCategoryEntity())? null :pizzaEntity.getCategoryEntity().stream().map(CategoryEntity::getCategory).collect(Collectors.toSet()));
     }
 
