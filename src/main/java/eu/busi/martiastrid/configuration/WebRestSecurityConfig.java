@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebRestSecurityCofing extends WebSecurityConfigurerAdapter {
+public class WebRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTHORIZED_REQUESTS_ANYBODY = new String[]{
             "/signup","/api/pizzas","",

@@ -2,6 +2,7 @@ package eu.busi.martiastrid.model;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Order implements Serializable {
     private Integer id;
@@ -99,7 +100,9 @@ public class Order implements Serializable {
     }
 
     public void removePizza(Integer id) {
-        orderLines.stream().filter(ol -> !ol.getPizza().getId().equals(id));
+        orderLines = orderLines.stream()
+                .filter(ol -> !ol.getPizza().getId().equals(id))
+                .collect(Collectors.toList());
     }
     public void addPizza(Pizza pizza, Integer quantity) {
         if (Objects.isNull(orderLines)) {
