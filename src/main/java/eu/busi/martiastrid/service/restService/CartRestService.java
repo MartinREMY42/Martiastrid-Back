@@ -67,7 +67,11 @@ public class CartRestService {
         if (indexPizza != -1) {
             PizzaQuantity newPQ = oldCart.get(indexPizza);
             newPQ.setQuantity(newPQ.getQuantity() - 1);
-            oldCart.set(indexPizza, newPQ);
+            if (newPQ.getQuantity()<=0) {
+                oldCart.remove(newPQ);
+            } else {
+                oldCart.set(indexPizza, newPQ);
+            }
         }
         return oldCart;
     }
