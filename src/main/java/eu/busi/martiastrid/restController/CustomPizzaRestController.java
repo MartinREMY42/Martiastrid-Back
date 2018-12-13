@@ -21,7 +21,7 @@ public class CustomPizzaRestController {
 
     /**
      * J
-     * @param customsPizzas décrit la pizza que l'utilisateur voudrait créer
+     * @param customPizzas décrit la pizza que l'utilisateur voudrait créer
      * @return
      */
     @PostMapping("/make")

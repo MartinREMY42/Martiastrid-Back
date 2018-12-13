@@ -17,6 +17,21 @@ public class ProviderConverter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public Pizza entityToModel(PizzaEntity pizzaEntity){
+        return new Pizza(
+          pizzaEntity.getId(),
+          pizzaEntity.getGenericName(),
+          pizzaEntity.getPrice()
+        );
+    }
+
+    public PizzaEntity pizzaToEntity(Pizza pizza) {
+        return new PizzaEntity(
+            pizza.getGenericName(),
+            pizza.getPrice()
+        );
+    }
+
     public Recipe recipeEntityToModel(RecipeEntity recipeEntity) {
         return new Recipe(recipeEntity.getId(),
                 recipeEntity.getQuantity(),

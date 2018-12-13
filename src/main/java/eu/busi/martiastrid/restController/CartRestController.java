@@ -76,6 +76,7 @@ public class CartRestController {
     }
 
     @PostMapping("/addAll")
+    //List<Recipe>
     public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);

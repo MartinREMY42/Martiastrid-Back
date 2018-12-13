@@ -20,10 +20,7 @@ public class RecipeEntity {
     private PizzaEntity pizzaEntity;
 
     @JoinColumn(name = "fk_ingredient", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.DETACH,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH,
-            CascadeType.REMOVE})
+    @ManyToOne
     private IngredientEntity ingredientEntity;
 
     public RecipeEntity(){}

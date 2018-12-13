@@ -1,6 +1,8 @@
 package eu.busi.martiastrid.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 import eu.busi.martiastrid.dataAccess.dao.IngredientDao;
 import eu.busi.martiastrid.dataAccess.dao.PizzaDao;
 
+import eu.busi.martiastrid.dataAccess.dao.RecipeDao;
 import eu.busi.martiastrid.exception.PizzaException;
 
 import eu.busi.martiastrid.model.Ingredient;
@@ -25,6 +28,9 @@ public class PizzaService {
 
     @Autowired
     private IngredientDao ingredientDao;
+
+    @Autowired
+    private RecipeDao recipeDao;
 
     @Autowired
     private PizzaDao pizzaDao;
@@ -52,13 +58,16 @@ public class PizzaService {
         Pizza pizza = new Pizza(
                 null,
                 genericName,
-                10 + recipeTotalPrice,
-                recipes,
-                null
+                10 + recipeTotalPrice
         );
 
+        pizza = pizzaDao.save(pizza);
+        ArrayList<Recipe> recipesWithId = new ArrayList<Recipe>();
+        for (Recipe recipe: recipes) {
+            recipesWithId.add(recipeDao.save(recipe, pizza));
+        }
+        pizza.setRecipes(recipesWithId);
         return pizza;
-
     }
 
     static int countTotalIngredient(Collection<Recipe> recipes) {

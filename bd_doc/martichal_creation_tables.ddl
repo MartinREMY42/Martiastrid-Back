@@ -83,7 +83,7 @@ create table pizza.pizzas (
     id SERIAL not null,
     generic_name varchar(50) not null,
     price integer not null,
-	  delete_flag boolean not null DEFAULT false,
+	delete_flag boolean not null DEFAULT false,
     constraint IDpizzas primary key (id));
 
 create table pizza.jt_pizza_category (

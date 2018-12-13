@@ -32,7 +32,11 @@ public class PizzaEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pizzaEntity", orphanRemoval = true)
     private Collection<RecipeEntity> recipeEntities;
 
-    public PizzaEntity() {
+    public PizzaEntity() {}
+
+    public PizzaEntity(String genericName, int price) {
+        this.genericName = genericName;
+        this.price = price;
     }
 
     public PizzaEntity(Integer id, String genericName, int price,

@@ -1,20 +1,21 @@
 package eu.busi.martiastrid.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Pizza implements Serializable {
     private Integer id;
     private String genericName;
     private Integer price;
-    private ArrayList<Recipe> recipes;
+    private List<Recipe> recipes;
     private Set<String> category;
 
-    public Pizza() {
+    public Pizza() { }
+
+    public Pizza(Integer id, String genericName, Integer price) {
+        this.id = id;
+        this.genericName = genericName;
+        this.price = price;
     }
 
     public Pizza(Integer id, String genericName, Integer price, Collection<Recipe> recipes,
@@ -50,11 +51,11 @@ public class Pizza implements Serializable {
         this.price = price;
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         return recipes;
     }
 
-    public void setRecipes(ArrayList<Recipe> recipes) {
+    public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 
@@ -100,7 +101,6 @@ public class Pizza implements Serializable {
 
     @Override
     public String toString() {
-        return this.genericName.equals("CustomPizza") ? this.recipes.toString() :
-                this.genericName;
+        return "";
     }
 }

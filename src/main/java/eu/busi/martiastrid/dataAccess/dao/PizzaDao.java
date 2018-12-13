@@ -3,6 +3,7 @@ package eu.busi.martiastrid.dataAccess.dao;
 import eu.busi.martiastrid.dataAccess.entity.CategoryEntity;
 import eu.busi.martiastrid.dataAccess.entity.PizzaEntity;
 import eu.busi.martiastrid.dataAccess.repository.PizzaRepository;
+import eu.busi.martiastrid.dataAccess.repository.RecipeRepository;
 import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaDatabaseException;
 import eu.busi.martiastrid.exception.PizzaException;
@@ -23,6 +24,9 @@ public class PizzaDao {
     private PizzaRepository pizzaRepository;
 
     @Autowired
+    private RecipeRepository recipeRepository;
+
+    @Autowired
     private ProviderConverter providerConverter;
     
     public Pizza getById(Integer id) {
@@ -38,9 +42,9 @@ public class PizzaDao {
     }
 
     public Pizza save(Pizza pizza){
-        PizzaEntity pizzaEntity = providerConverter.pizzaModelToEntity(pizza);
+        PizzaEntity pizzaEntity = providerConverter.pizzaToEntity(pizza);
         pizzaEntity = pizzaRepository.save(pizzaEntity);
-        return providerConverter.pizzaEntityToModel(pizzaEntity);
+        return providerConverter.entityToModel(pizzaEntity);
     }
 
     public Collection<Pizza> getAllWithCategory(String category) {
