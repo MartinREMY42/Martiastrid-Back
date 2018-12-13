@@ -6,6 +6,7 @@ import eu.busi.martiastrid.model.Order;
 import eu.busi.martiastrid.model.Pizza;
 import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.service.OrderService;
+import eu.busi.martiastrid.service.PizzaService;
 import eu.busi.martiastrid.service.restService.CartRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @RequestMapping(headers = "Accept=application/json", value = "/api/cart")
 @RestController()
@@ -26,6 +28,9 @@ public class CartRestController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PizzaService pizzaService;
 
     @Autowired
     private ProviderConverter providerConverter;
@@ -68,6 +73,27 @@ public class CartRestController {
         order.removePizza(pizza.getId());
         orderService.saveOrderInDatabase(order);
         return new ResponseEntity<>(this.cartRestService.getUserCart(username), HttpStatus.OK);
+    }
+
+    @PostMapping("/addAll")
+    public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
+        try {
+            Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
+            for (PizzaQuantity pizzaQuantity : orderedPizza) {
+                if (Objects.isNull(pizzaQuantity.getPizza().getId())) {
+                    pizzaService.savePizzaInDatabase(pizzaQuantity.getPizza());
+                }
+            }
+            HashMap<Integer, Integer> pizzaCounter = providerConverter.pizzaQuantityToPizzaCounter(orderedPizza);
+            orderService.addAllPizzasToOrder(pizzaCounter, order);
+            orderService.saveOrderInDatabase(order);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        } catch (PizzaException p) {
+            // TODO : permettre de transmettre ça en message au front
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        }
     }
 
 }

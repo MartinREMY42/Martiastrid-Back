@@ -64,23 +64,4 @@ public class PremadePizzaRestController {
         return pizzas;
     }
 
-    /**
-     * @return le panier sous une forme de pseudo-map
-     */
-    @PostMapping("/addToCart")
-    public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
-        try {
-            Order order = orderService.getOrderForConnectedUserOrCreateIfNonExistent();
-            HashMap<Integer, Integer> pizzaCounter = providerConverter.pizzaQuantityToPizzaCounter(orderedPizza);
-            orderService.addAllPizzasToOrder(pizzaCounter, order);
-            orderService.saveOrderInDatabase(order);
-            return new ResponseEntity<>(cart, HttpStatus.OK);
-        } catch (PizzaException p) {
-            // TODO : permettre de transmettre ça en message au front
-            return new ResponseEntity<>(cart, HttpStatus.OK);
-        }
-    }
-
 }

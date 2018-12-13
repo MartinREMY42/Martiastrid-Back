@@ -6,6 +6,7 @@ import eu.busi.martiastrid.model.Pizza;
 import eu.busi.martiastrid.model.PizzaQuantity;
 import eu.busi.martiastrid.model.RecipesQuantity;
 import eu.busi.martiastrid.service.PizzaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class CustomPizzaRestController {
 
+    @Autowired
     private PizzaService pizzaService;
 
     /**
@@ -22,7 +24,7 @@ public class CustomPizzaRestController {
      * @param customsPizzas décrit la pizza que l'utilisateur voudrait créer
      * @return
      */
-    @PostMapping
+    @PostMapping("/make")
     public ResponseEntity<PizzaQuantity> attemptCustomPizzaCreation(@RequestBody RecipesQuantity customPizzas){
         Pizza result = null;
         try {

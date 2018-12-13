@@ -43,7 +43,9 @@ public class PizzaService {
         }
 
         Collection<Ingredient> allIngredients = ingredientDao.getAll();
-        Collection<Integer> ingredientsIds = recipes.stream().map(recipe -> recipe.getIngredient().getId()).collect(Collectors.toList());
+        Collection<Integer> ingredientsIds = recipes.stream()
+                .map(recipe -> recipe.getIngredient().getId())
+                .collect(Collectors.toList());
         int recipeTotalPrice = recipes.stream()
                 .map(recipe -> recipe.getIngredient().getPriceForComposition() * recipe.getQuantity())
                 .reduce(0, (a, b) -> a + b);

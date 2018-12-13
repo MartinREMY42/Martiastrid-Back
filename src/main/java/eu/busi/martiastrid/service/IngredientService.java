@@ -3,6 +3,7 @@ package eu.busi.martiastrid.service;
 import eu.busi.martiastrid.constants.Constantsi18n;
 import eu.busi.martiastrid.dataAccess.dao.IngredientDao;
 import eu.busi.martiastrid.dataAccess.dao.PizzaDao;
+import eu.busi.martiastrid.exception.PizzaDatabaseException;
 import eu.busi.martiastrid.exception.PizzaException;
 import eu.busi.martiastrid.model.Ingredient;
 import eu.busi.martiastrid.model.Pizza;
@@ -44,6 +45,7 @@ public class IngredientService {
                 (pizzaId, quantity) -> {
                     if (!Objects.isNull(quantity) && quantity > 0) {
                         pizzas.put(pizzaDao.getById(pizzaId), quantity);
+                        // TODO : ICI JE POURRAIS VERIFIER QUE C'EST PAS UN NOUVELLE CUSTOM
                     }
                 }
         );
