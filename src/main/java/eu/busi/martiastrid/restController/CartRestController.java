@@ -11,6 +11,7 @@ import eu.busi.martiastrid.service.restService.CartRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class CartRestController {
     private ProviderConverter providerConverter;
 
     @GetMapping("/getUserCart")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     ResponseEntity<List<PizzaQuantity>> getUserCart() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(this.cartRestService.getUserCart(username),
@@ -43,6 +45,7 @@ public class CartRestController {
     }
 
     @PostMapping("/increment")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     ResponseEntity<List<PizzaQuantity>> incrementCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         this.cartRestService.increment(pizza, username);
@@ -54,6 +57,7 @@ public class CartRestController {
     }
 
     @PostMapping("/decrement")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     ResponseEntity<List<PizzaQuantity>> decrementCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         this.cartRestService.decrement(pizza, username);
@@ -65,6 +69,7 @@ public class CartRestController {
     }
 
     @PostMapping("/remove")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     ResponseEntity<List<PizzaQuantity>> removeFromCart(@RequestBody Pizza pizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         this.cartRestService.remove(pizza, username);
@@ -76,7 +81,7 @@ public class CartRestController {
     }
 
     @PostMapping("/addAll")
-    //List<Recipe>
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);

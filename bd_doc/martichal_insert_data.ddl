@@ -75,8 +75,12 @@ INSERT INTO pizza.ingredients(
 INSERT INTO pizza.ingredients(
     id, generic_name, stock_quantity, price_for_composition)
     VALUES (12, 'fromage_de_chevre', 120, 12);
+	
+INSERT INTO pizza.ingredients(
+    id, generic_name, stock_quantity, price_for_composition)
+    VALUES (13, 'patte', 100, 12);
 
-SELECT setval('pizza.ingredients_id_seq', 12, true);
+SELECT setval('pizza.ingredients_id_seq', 13, true);
 
 
 -- categories of pizzas
@@ -108,31 +112,31 @@ INSERT INTO pizza.pizza_category(
 -- ___________________
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (1, 'margherita', 10, false);
+    id, generic_name, price)
+    VALUES (1, 'margherita', 10);
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (2, 'regina', 20, false);
+    id, generic_name, price)
+    VALUES (2, 'regina', 20);
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (3, 'fourCheese', 30, false);
+    id, generic_name, price)
+    VALUES (3, 'fourCheese', 30);
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (4, 'veggie', 40, false);
+    id, generic_name, price)
+    VALUES (4, 'veggie', 40);
 
 -- custom pizzas 
 -- ___________________ 
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (5,'CustomPizza', 12, true);
+    id, generic_name, price)
+    VALUES (5,'CustomPizza', 12);
 
 INSERT INTO pizza.pizzas(
-    id, generic_name, price, custom)
-    VALUES (6, 'CustomPizza', 14, true);
+    id, generic_name, price)
+    VALUES (6, 'CustomPizza', 14);
 
 SELECT setval('pizza.pizzas_id_seq', 6, true);
 
@@ -165,6 +169,9 @@ INSERT INTO pizza.recipes(
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza)
     VALUES (10, 1);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 1);
 
 
 INSERT INTO pizza.recipes(
@@ -179,6 +186,9 @@ INSERT INTO pizza.recipes(
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
     VALUES (11, 2,2);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 2);
 
 
 INSERT INTO pizza.recipes(
@@ -196,6 +206,9 @@ INSERT INTO pizza.recipes(
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
     VALUES (12, 3,10);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 3);
 
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
@@ -215,6 +228,9 @@ INSERT INTO pizza.recipes(
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
     VALUES (11, 4,2);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 4);
 
 
 
@@ -224,10 +240,16 @@ INSERT INTO pizza.recipes(
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
     VALUES (2, 5,3);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 5);
 
 INSERT INTO pizza.recipes(
     fk_ingredient, fk_pizza,quantity)
     VALUES (1, 6,6);
+INSERT INTO pizza.recipes(
+    fk_ingredient, fk_pizza)
+    VALUES (13, 6);
 
 -- orders
 -- ___________________

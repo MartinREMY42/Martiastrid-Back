@@ -6,6 +6,7 @@ import eu.busi.martiastrid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class PizzasFavoriteRestController {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<Pizza>> getPizzasFavorite(){
         try {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -35,6 +37,7 @@ public class PizzasFavoriteRestController {
 
 
     @GetMapping("/{idPizza}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<Pizza>> switchPizzaFavoriteness(@PathVariable int idPizza){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<List<Pizza>>(userService.switchPizzaFavoriteness(username, idPizza),

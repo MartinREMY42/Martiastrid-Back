@@ -29,6 +29,13 @@ public class IngredientDao {
                 .collect(Collectors.toList());
     }
 
+    public Collection<Ingredient> getExceptPatte(){
+        return ingredientRepository.findAllByGenericNameNotContaining("patte")
+                    .stream()
+                    .map(providerConverter::ingredientEntityToModel)
+                    .collect(Collectors.toList());
+    }
+
     public void saveAll(Collection<Ingredient> ingredients) {
         ingredients.forEach(
                 ingredient -> {

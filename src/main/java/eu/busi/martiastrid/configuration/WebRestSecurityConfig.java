@@ -22,7 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTHORIZED_REQUESTS_ANYBODY = new String[]{
-            "/signup","/api/pizzas","",
+            "/signup","/api/pizzas","api/ingredients/all","/api/ingredients/exceptPatte",
+            "/api/categories","/api",
             "/api/token/generate-token",
     };
 
@@ -53,16 +54,16 @@ public class WebRestSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
-//        http.cors().and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/api/token/generate-token","/signup").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
+        http.cors().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers(AUTHORIZED_REQUESTS_ANYBODY).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.addFilterBefore(authenticationTokenFilterBean(),
                 UsernamePasswordAuthenticationFilter.class);
     }

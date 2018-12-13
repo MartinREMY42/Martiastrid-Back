@@ -25,7 +25,10 @@ public class IngredientService {
 
     public Collection<Ingredient> getAllFromDatabase() {
         return ingredientDao.getAll();
+    }
 
+    public Collection<Ingredient> getAllFromDatabaseExceptPatte(){
+        return ingredientDao.getExceptPatte();
     }
 
     public Ingredient getIngredientById(int idIngredient) {
