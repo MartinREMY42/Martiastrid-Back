@@ -64,7 +64,11 @@ public class ProviderConverter {
                 orderEntity.getCreationDate(),
                 orderEntity.getPromoName(),
                 orderEntity.getReduction(),
-                Objects.isNull(orderEntity.getOrderLineCollection())? null :orderEntity.getOrderLineCollection().stream().map(this::orderLineEntityToModel).collect(Collectors.toList()),
+                Objects.isNull(orderEntity.getOrderLineCollection())?
+                        null :
+                        orderEntity.getOrderLineCollection()
+                                .stream().map(this::orderLineEntityToModel)
+                                .collect(Collectors.toList()),
                 userEntityToModel(orderEntity.getFkUser()),
                 Objects.isNull(orderEntity.getFkPayment()) ? null : paymentEntityToModel(orderEntity.getFkPayment())
         );
@@ -226,4 +230,5 @@ public class ProviderConverter {
         });
         return pizzaCounter;
     }
+
 }

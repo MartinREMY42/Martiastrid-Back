@@ -77,6 +77,7 @@ public class CartRestController {
 
     @PostMapping("/addAll")
     public ResponseEntity<List<PizzaQuantity>> addToCart(@RequestBody List<PizzaQuantity> orderedPizza) {
+        System.out.println("ADD ALLLLLLL \n\n\n");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<PizzaQuantity> cart = this.cartRestService.mergeToCurrentCart(orderedPizza, username);
         try {

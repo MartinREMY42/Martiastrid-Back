@@ -2,6 +2,7 @@ package eu.busi.martiastrid.dataAccess.dao;
 
 import eu.busi.martiastrid.dataAccess.entity.CategoryEntity;
 import eu.busi.martiastrid.dataAccess.entity.PizzaEntity;
+import eu.busi.martiastrid.dataAccess.entity.RecipeEntity;
 import eu.busi.martiastrid.dataAccess.repository.PizzaRepository;
 import eu.busi.martiastrid.dataAccess.util.ProviderConverter;
 import eu.busi.martiastrid.exception.PizzaDatabaseException;

@@ -104,6 +104,7 @@ public class Order implements Serializable {
                 .filter(ol -> !ol.getPizza().getId().equals(id))
                 .collect(Collectors.toList());
     }
+
     public void addPizza(Pizza pizza, Integer quantity) {
         if (Objects.isNull(orderLines)) {
             orderLines = new ArrayList<>();
