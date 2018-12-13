@@ -27,6 +27,10 @@ public class IngredientService {
 
     }
 
+    public Ingredient getIngredientById(int idIngredient) {
+        return ingredientDao.findById(idIngredient);
+    }
+
     public boolean checkEnoughIngredients(Collection<Integer> ingredientsIds, Integer quantity) {
         Collection<Ingredient> allIngredients = ingredientDao.getAll();
         return allIngredients.stream() // checks quantities
@@ -45,8 +49,11 @@ public class IngredientService {
         );
 
         for (Pizza pizza : pizzas.keySet()) {
-            if (! pizza.getIngredients().stream()
-                    .allMatch(i -> i.getStockQuantity() - pizzas.get(pizza) >= 0)) {
+            if (! pizza.getRecipes().stream()
+                    .allMatch(recipe -> {
+                        int quantite = pizzas.get(pizza) * recipe.getQuantity();
+                        return recipe.getIngredient().getStockQuantity() - quantite >= 0;
+                    })) {
                 throw new PizzaException(Constantsi18n.ERROR_NOT_ENOUGH_INGREDIENTS_IN_STOCK);
             }
         }

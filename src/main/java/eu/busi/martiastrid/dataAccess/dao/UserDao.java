@@ -44,7 +44,7 @@ public class UserDao {
         return providerConverter.userEntityToModel(userRepository.findByUsername(username));
     }
 
-    public Collection<Pizza> getAllPizzasFavority(String username) throws PizzaDatabaseException{
+    public Collection<Pizza> getAllFavoritePizzas(String username) throws PizzaDatabaseException{
 
         UserEntity userEntity = userRepository.findByUsername(username);
         if (Objects.isNull(userEntity)) {

@@ -7,7 +7,6 @@ import eu.busi.martiastrid.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,7 @@ public class UserService {
     }
 
     public List<Pizza> getPizzasFavorites(String username) throws PizzaDatabaseException {
-        return userDao.getAllPizzasFavority(username).stream().collect(Collectors.toList());
+        return userDao.getAllFavoritePizzas(username).stream().collect(Collectors.toList());
     }
 
     public List<Pizza> switchPizzaFavoriteness(String username, int idPizza){

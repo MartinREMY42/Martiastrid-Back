@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public interface PizzaRepository extends JpaRepository<PizzaEntity, Integer> {
-    Collection<PizzaEntity> findAllByCustomFalse();
+    Collection<PizzaEntity> findAllByGenericNameIsNotContaining(String pizza);
 
     Collection<PizzaEntity> findAllByCategoryEntityContains(Set<CategoryEntity> categoryEntity);
 }

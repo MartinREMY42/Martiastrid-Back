@@ -27,7 +27,7 @@ public class PizzaDao {
     }
 
     public Collection<Pizza> getAllStandard(){
-        Collection<PizzaEntity> pizzaEntities = pizzaRepository.findAllByCustomFalse();
+        Collection<PizzaEntity> pizzaEntities = pizzaRepository.findAllByGenericNameIsNotContaining("Pizza");
         Collection<Pizza> pizzas = pizzaEntities.stream()
                 .map(providerConverter::pizzaEntityToModel)
                 .collect(Collectors.toList());

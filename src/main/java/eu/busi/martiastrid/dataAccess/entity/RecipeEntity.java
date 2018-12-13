@@ -1,11 +1,10 @@
 package eu.busi.martiastrid.dataAccess.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "recettes")
-public class RecipeEntity implements Serializable {
+@Table(name = "recipes")
+public class RecipeEntity {
 
     @Id
     @Column(name = "id")
@@ -17,20 +16,23 @@ public class RecipeEntity implements Serializable {
     private int quantity;
 
     @JoinColumn(name = "fk_pizza", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private PizzaEntity fkPizza;
+    @ManyToOne()
+    private PizzaEntity pizzaEntity;
 
     @JoinColumn(name = "fk_ingredient", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    private IngredientEntity fkIngredient;
+    @ManyToOne(cascade = {CascadeType.DETACH,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH,
+            CascadeType.REMOVE})
+    private IngredientEntity ingredientEntity;
 
     public RecipeEntity(){}
 
-    public RecipeEntity(Integer id, int quantity, PizzaEntity fkPizza, IngredientEntity fkIngredient) {
+    public RecipeEntity(Integer id, int quantity, PizzaEntity pizzaEntity, IngredientEntity ingredientEntity) {
         this.id = id;
         this.quantity = quantity;
-        this.fkPizza = fkPizza;
-        this.fkIngredient = fkIngredient;
+        this.pizzaEntity = pizzaEntity;
+        this.ingredientEntity = ingredientEntity;
     }
 
     public Integer getId() {
@@ -49,19 +51,19 @@ public class RecipeEntity implements Serializable {
         this.quantity = quantity;
     }
 
-    public PizzaEntity getFkPizza() {
-        return fkPizza;
+    public PizzaEntity getPizzaEntity() {
+        return pizzaEntity;
     }
 
-    public void setFkPizza(PizzaEntity fkPizza) {
-        this.fkPizza = fkPizza;
+    public void setPizzaEntity(PizzaEntity pizzaEntity) {
+        this.pizzaEntity = pizzaEntity;
     }
 
-    public IngredientEntity getFkIngredient() {
-        return fkIngredient;
+    public IngredientEntity getIngredientEntity() {
+        return ingredientEntity;
     }
 
-    public void setFkIngredient(IngredientEntity fkIngredient) {
-        this.fkIngredient = fkIngredient;
+    public void setIngredientEntity(IngredientEntity ingredientEntity) {
+        this.ingredientEntity = ingredientEntity;
     }
 }

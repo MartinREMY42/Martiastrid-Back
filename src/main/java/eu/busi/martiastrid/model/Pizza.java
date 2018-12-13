@@ -85,11 +85,11 @@ public class Pizza implements Serializable {
             if (size!=this.recipes.size()) {
                 return false;
             }
-            Recipe[] recettesPizza = new Recipe[size];
-            recettesPizza = pizza.recipes.toArray(recettesPizza);
-            Recipe[] recettesThis = new Recipe[size];
-            recettesThis = this.recipes.toArray(recettesThis);
-            return Arrays.equals(recettesPizza, recettesThis);
+            Recipe[] recipesPizza = new Recipe[size];
+            recipesPizza = pizza.recipes.toArray(recipesPizza);
+            Recipe[] recipesThis = new Recipe[size];
+            recipesThis = this.recipes.toArray(recipesThis);
+            return Arrays.equals(recipesPizza, recipesThis);
         }
         if (!this.isCustom() && !pizza.isCustom()) {
             // comparer deux pizza standard se fait à l'id

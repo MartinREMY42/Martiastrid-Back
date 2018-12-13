@@ -26,7 +26,7 @@ public class IngredientEntity implements Serializable {
     private int priceForComposition;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ingredientEntity",  orphanRemoval = true)
-    private Collection<PortionEntity> portionEntities;
+    private Collection<RecipeEntity> recipeEntities;
 
     public IngredientEntity() {
     }
@@ -70,12 +70,12 @@ public class IngredientEntity implements Serializable {
         this.priceForComposition = priceForComposition;
     }
 
-    public Collection<PortionEntity> getPortionEntities() {
-        return portionEntities;
+    public Collection<RecipeEntity> getRecipeEntities() {
+        return recipeEntities;
     }
 
-    public void setPortionEntities(Collection<PortionEntity> portionEntities) {
-        this.portionEntities = portionEntities;
+    public void setRecipeEntities(Collection<RecipeEntity> recipeEntities) {
+        this.recipeEntities = recipeEntities;
     }
 
     @Override

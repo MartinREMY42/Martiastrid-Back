@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,12 @@ public class IngredientDao {
         );
     }
 
+    public Ingredient findById(Integer id) {
+        Optional<IngredientEntity> ingredientEntity = this.ingredientRepository.findById(id);
+        if (ingredientEntity.isPresent()) {
+            return this.providerConverter.ingredientEntityToModel(ingredientEntity.get());
+        }
+        return null;
+    }
 
 }

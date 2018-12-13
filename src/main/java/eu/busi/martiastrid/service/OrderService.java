@@ -45,10 +45,12 @@ public class OrderService {
                     .filter(orderLine -> orderLine.getQuantity() > 0)
                     .forEach(
                             orderLine -> {
-                                orderLine.getPizza().getIngredients().forEach(
-                                        ingredient -> {
-                                            Ingredient ingredientInAllIngredients = allIngredients.get(allIngredients.indexOf(ingredient));
-                                            ingredientInAllIngredients.deCreaseStock(orderLine.getQuantity());
+                                orderLine.getPizza().getRecipes().forEach(
+                                        recipe -> {
+                                            Ingredient ingredientInAllIngredients = allIngredients
+                                                    .get(allIngredients.indexOf(recipe.getIngredient()));
+                                            ingredientInAllIngredients
+                                                    .deCreaseStock(orderLine.getQuantity() * recipe.getQuantity());
                                         }
                                 );
                             }

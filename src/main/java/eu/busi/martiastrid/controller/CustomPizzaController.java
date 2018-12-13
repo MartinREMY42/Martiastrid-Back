@@ -1,8 +1,10 @@
 package eu.busi.martiastrid.controller;
 
 import eu.busi.martiastrid.exception.PizzaException;
+import eu.busi.martiastrid.model.Ingredient;
 import eu.busi.martiastrid.model.Order;
 import eu.busi.martiastrid.model.Pizza;
+import eu.busi.martiastrid.model.Recipe;
 import eu.busi.martiastrid.model.form.IngredientsList;
 import eu.busi.martiastrid.service.CartService;
 import eu.busi.martiastrid.service.IngredientService;
@@ -17,8 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static eu.busi.martiastrid.constants.Constants.*;
 import static eu.busi.martiastrid.constants.Constantsi18n.ERROR_MESSAGE;
@@ -68,18 +72,26 @@ public class CustomPizzaController {
         int quantity = allIngredientsSelected.getQuantity();
 
         if (quantity < 0) {
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGE, messageSource.getMessage(ERROR_PIZZA_AMOUNT, null, locale));
+            redirectAttributes.addFlashAttribute(
+                    ERROR_MESSAGE,
+                    messageSource.getMessage(ERROR_PIZZA_AMOUNT, null, locale));
             return "redirect:/customPizza";
         }
 
         if (!ingredientService.checkEnoughIngredients(allIngredientsSelected.getIngredients() , quantity)) {
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGE, messageSource.getMessage(ERROR_NOT_ENOUGH_INGREDIENTS_IN_STOCK, null, locale));
+            redirectAttributes.addFlashAttribute(
+                    ERROR_MESSAGE,
+                    messageSource.getMessage(ERROR_NOT_ENOUGH_INGREDIENTS_IN_STOCK, null, locale));
             return "redirect:/customPizza";
         }
 
         boolean isUserConnected = ! Objects.isNull(request.getUserPrincipal());
         try {
-            Pizza customPizza = pizzaService.createNonStandardPizza(allIngredientsSelected.getIngredients());
+            List<Recipe> recipeList = allIngredientsSelected.getIngredients().stream()
+                    .map(ingredient ->
+                        new Recipe(null, 1, this.ingredientService.getIngredientById(ingredient)))
+                    .collect(Collectors.toList());
+            Pizza customPizza = pizzaService.createNonStandardPizza("CustomPizza", recipeList);
 
             if (! isUserConnected) {
                 cartService.addCustomPizzasToCart(customPizza, cart, quantity);

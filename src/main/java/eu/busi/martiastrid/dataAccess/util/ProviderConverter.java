@@ -17,6 +17,19 @@ public class ProviderConverter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public Recipe recipeEntityToModel(RecipeEntity recipeEntity) {
+        return new Recipe(recipeEntity.getId(),
+                recipeEntity.getQuantity(),
+                ingredientEntityToModel(recipeEntity.getIngredientEntity()));
+    }
+
+    public RecipeEntity recipeModelToEntity(Recipe recipe, PizzaEntity pizzaEntity) {
+        return  new RecipeEntity(recipe.getId(),
+                recipe.getQuantity(),
+                pizzaEntity,
+                ingredientModelToEntity(recipe.getIngredient()));
+    }
+
     public Ingredient ingredientEntityToModel(IngredientEntity ingredientEntity) {
         return new Ingredient(ingredientEntity.getId(),
                 ingredientEntity.getGenericName(),
@@ -83,12 +96,11 @@ public class ProviderConverter {
                 order.getReduction(),
                 null,
                 Objects.isNull(order.getPayment()) ? null : paymentModelToEntity(order.getPayment()),
-                userModelToEntity(order.getUser())
-
-        );
+                userModelToEntity(order.getUser()));
         orderEntity.setOrderLineCollection(
-                Objects.isNull(order.getOrderLines())? null :order.getOrderLines().stream().map(l -> orderLineModelToEntity(l, orderEntity)).collect(Collectors.toList())
-        );
+                Objects.isNull(order.getOrderLines())? null :order.getOrderLines().stream()
+                        .map(l -> orderLineModelToEntity(l, orderEntity))
+                        .collect(Collectors.toList()));
         return orderEntity;
     }
 
@@ -130,20 +142,24 @@ public class ProviderConverter {
         return new Pizza(pizzaEntity.getId(),
                 pizzaEntity.getGenericName(),
                 pizzaEntity.getPrice(),
-                pizzaEntity.getIngredients().stream().map(this::ingredientEntityToModel).collect(Collectors.toList()),
+                pizzaEntity.getRecipeEntities().stream().map(this::recipeEntityToModel).collect(Collectors.toList()),
                 Objects.isNull(pizzaEntity.getCategoryEntity())? null :pizzaEntity.getCategoryEntity().stream().map(CategoryEntity::getCategory).collect(Collectors.toSet()));
     }
 
     public PizzaEntity pizzaModelToEntity(Pizza pizza) {
-        return new PizzaEntity(
+        PizzaEntity pizzaEntity = new PizzaEntity(
                 pizza.getId(),
                 pizza.getGenericName(),
                 pizza.getPrice(),
-                pizza.getIngredients().stream().map(this::ingredientModelToEntity).collect(Collectors.toList()),
-                pizza.isCustom(),
-                Objects.isNull(pizza.getCategory()) ? null : pizza.getCategory().stream().map(CategoryEntity::new).collect(Collectors.toSet())
-
-        );
+                null,
+                Objects.isNull(pizza.getCategory()) ? null : pizza.getCategory().stream()
+                        .map(CategoryEntity::new)
+                        .collect(Collectors.toSet()));
+        pizzaEntity.setRecipeEntities(
+                Objects.isNull(pizza.getRecipes())? null : pizza.getRecipes().stream()
+                        .map(recipe -> recipeModelToEntity(recipe, pizzaEntity))
+                        .collect(Collectors.toList()));
+        return pizzaEntity;
     }
 
     public UserEntity userModelToEntity(User userModel) {
@@ -195,9 +211,9 @@ public class ProviderConverter {
         user.setPizzasFavorites(
                 Objects.isNull(userEntity.getPizzasFavorites()) ?
                         null : userEntity.getPizzasFavorites()
-                                         .stream()
-                                         .map(pizzaEntity -> pizzaEntityToModel(pizzaEntity))
-                                         .collect(Collectors.toSet())
+                        .stream()
+                        .map(pizzaEntity -> pizzaEntityToModel(pizzaEntity))
+                        .collect(Collectors.toSet())
         );
 
         return user;
