@@ -23,8 +23,8 @@ public class WebRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTHORIZED_REQUESTS_ANYBODY = new String[]{
             "/signup","/api/pizzas","api/ingredients/all","/api/ingredients/exceptPatte",
-            "/api/categories","/api",
-            "/api/token/generate-token",
+            "/api/categories","/api","/api/categories",
+            "/api/token/generate-token","/api/ingredients/exceptPatte"
     };
 
     @Autowired
@@ -53,7 +53,7 @@ public class WebRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
+       // http.cors().and().csrf().disable().authorizeRequests().anyRequest().permitAll();
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()

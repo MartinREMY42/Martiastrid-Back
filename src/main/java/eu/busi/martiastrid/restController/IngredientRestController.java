@@ -21,13 +21,11 @@ public class IngredientRestController {
     private IngredientService ingredientService;
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Ingredient> getAll(){
         return ingredientService.getAllFromDatabase().stream().collect(Collectors.toList());
     }
 
     @GetMapping("/exceptPatte")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Ingredient> getAllExceptPatte(){
         return ingredientService.getAllFromDatabaseExceptPatte().stream().collect(Collectors.toList());
     }

@@ -13,28 +13,28 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/customPizza")
+@RequestMapping("/api/pizzaParty")
 @CrossOrigin("*")
-public class CustomPizzaRestController {
+public class PizzaPartyRestController {
 
     @Autowired
     private PizzaService pizzaService;
 
     /**
      * J
-     * @param customPizzas décrit la pizza que l'utilisateur voudrait créer
+     * @param pizzaPartys décrit la pizza que l'utilisateur voudrait créer
      * @return
      */
     @PostMapping("/make")
-    public ResponseEntity<PizzaQuantity> attemptCustomPizzaCreation(@RequestBody RecipesQuantity customPizzas){
+    public ResponseEntity<PizzaQuantity> attemptPizzaPartyCreation(@RequestBody RecipesQuantity pizzaPartys){
         Pizza result = null;
         try {
-             result = pizzaService.createNonStandardPizza("CustomPizza", customPizzas.getRecipes());
+            result = pizzaService.createNonStandardPizza("PizzaParty", pizzaPartys.getRecipes());
         } catch (PizzaException e) {
             System.out.println(e.getMessage());
         }
         return result != null ?
-                new ResponseEntity<>(new PizzaQuantity(result, customPizzas.getQuantity()),
+                new ResponseEntity<>(new PizzaQuantity(result, pizzaPartys.getQuantity()),
                         HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.CONFLICT);
     }

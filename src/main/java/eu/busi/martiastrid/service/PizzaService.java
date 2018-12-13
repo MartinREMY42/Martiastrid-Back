@@ -44,7 +44,7 @@ public class PizzaService {
             throw new PizzaException(ERROR_NOT_ENOUGH_INGREDIENTS_SELECTED);
         }
 
-        if (countTotalIngredient(recipes) > MAX_AMOUNT_INGREDIENTS_CUSTOM_PIZZA) {
+        if (!genericName.equals("PizzaParty") && countTotalIngredient(recipes) > MAX_AMOUNT_INGREDIENTS_CUSTOM_PIZZA) {
             throw new PizzaException(ERROR_TOO_MUCH_INGREDIENTS_SELECTED);
         }
 
